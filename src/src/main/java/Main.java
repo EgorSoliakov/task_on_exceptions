@@ -8,9 +8,20 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
        StringBuilder sb = new StringBuilder(newMan());
-       String[] line =sb.toString().split(" ");
-       String fileName = line[0]+".txt";
-       writeFile(sb,fileName);
+       // System.out.println(sb);
+       String[] line = sb.toString().split(" ");
+
+            if (line.length != 6) {
+                throw new IllegalArgumentException("Данные введены неверно!");
+            }
+
+            try {
+                String fileName = line[0] + ".txt";
+                writeFile(sb, fileName);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+
     }
 
     private static Date parseDate(String line) throws ParseException {

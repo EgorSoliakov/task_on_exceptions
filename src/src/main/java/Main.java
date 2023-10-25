@@ -6,9 +6,13 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
+    /**
+     *  Принимаем StringBuilder(Не знаю зачем можно было бы и массив стрингов, но уже сделал), переделываем его
+     *  в массив стрингов, проверяем верно ли кол-во данных и записываем в файл
+     * @param args
+     */
     public static void main(String[] args) {
        StringBuilder sb = new StringBuilder(newMan());
-       // System.out.println(sb);
        String[] line = sb.toString().split(" ");
 
             if (line.length != 6) {
@@ -24,14 +28,35 @@ public class Main {
 
     }
 
+    /**
+     * из String в формат Date
+     * @param line
+     * @return возвращает данные в формате Date
+     * @throws ParseException ошибка введения даты
+     */
     private static Date parseDate(String line) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         return format.parse(line);
     }
+
+    /**
+     * из Date в формат String
+     * @param date
+     * @return возвращает данные в формате String
+     */
     private static String fomatDate(Date date){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         return format.format(date);
     }
+
+    /**
+     *newMan - метод принимающий данные от пользователя, проверяющий их и записывающий
+     * @return  StringBuilder строка
+     * @throws ParseException ошибка введения даты
+     * @throws IllegalArgumentException ошибка не полного ввода данных
+     * @throws NumberFormatException ошибка неверного ввода номера телефона
+     * @throws GenderFormatException ошибка неверного ввода пола
+     */
     public static StringBuilder newMan(){
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(System.in);
@@ -66,13 +91,14 @@ public class Main {
                 throw new GenderFormatException("Гендер указан не верно(Может быть либо M, либо F)");
             }
             sb.append(gender);
-
+/*
             System.out.println(lastName);
             System.out.println(firstName);
             System.out.println(middleName);
             System.out.println(fomatDate(dateOfBirth));
             System.out.println(phoneNumber);
             System.out.println(gender);
+*/
         } catch (NumberFormatException e){
             System.out.println("Неверный номер телефона");
         } catch (IllegalArgumentException e){
@@ -86,6 +112,13 @@ public class Main {
         }
         return sb;
     }
+
+    /**
+     * Записывает или дописывает данные в файл
+     * @param sb строка StringBuilder
+     * @param fileName имя файла
+     * @throws IOException Исключение ввода-вывода данных
+     */
     static void writeFile(StringBuilder sb, String fileName){
         try(FileWriter fw = new FileWriter(fileName,true)){
             fw.write(sb.toString());
